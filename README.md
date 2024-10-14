@@ -21,4 +21,4 @@ We distribute this code under the MIT licence. This licence imposes two obligati
 
 # Questions
 
-Any questions and requests please send to [flex.studia.dev@gmail.com](mailto:flex.studia.dev@gmail.com).
+Any questions and suggestions please send to [flex.studia.dev@gmail.com](mailto:flex.studia.dev@gmail.com).
