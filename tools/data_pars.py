@@ -16,17 +16,14 @@ import re
 import numpy as np
 from collections import Counter
 
-from progress_dialog import initialize_progress_dialog, update_progress, finalize_progress
-
 """
     How to use:
         # INPUTS
         file_path: A string containing the path to the file to be parsed (obligatory).
-        parent_window: The parent PyQt window where a QProgressDialog can be added in Qt-based apps (if used).
         line_start_from_0: An integer starting from 0 to set the starting line of the file if needed (normally not necessary).
         # CALL
         from data_reading import DataPars as DataPars
-        data_read =  DataPars(file_path, parent_window=None) # data_read =  DataPars(file_path, parent_window=None, line_start_from_0)
+        data_read =  DataPars(file_path) # data_read =  DataPars(file_path, line_starting_from_0)
         data_read.file_pars_f()
         # OUTPUT
         my_data = data_read.file_body  # A NumPy array of floats (float64), of size line by column, containing the parsed data from the file.
@@ -54,19 +51,16 @@ class DataPars:
         DataPars also determines the accuracy of the original data. So it can be reused from file_accuracy to keep the initial accuracy, for example.
     """
 
-    def __init__(self, file_path, parent_window, file_start=0):
+    def __init__(self, file_path, file_start=0):
         """
-            Initialize the DataPars object with file_path, parent_window, and file_start.
+            Initialize the DataPars object with file_path and file_start.
         :param file_path: str
             The path to the file to be processed.
-        :param parent_window: object
-            Reference to the parent window object in the UI.
         :param file_start: int
             The starting point in the file, default is 0.
         """
         # INPUTS
         self.file_path = file_path
-        self.parent_window = parent_window
         self.file_start = file_start
         # Initialize all other attributes with default values.
         self.reset_values()
@@ -116,7 +110,6 @@ class DataPars:
             Parses the given file content line-by-line and stores the parsed data.
 
             Initializes necessary data structures for parsing the file content.
-            Utilizes a progress bar if a parent window is present.
             Each line is split according to a specified pattern and converted into a numpy array.
             Lengths of these arrays are tracked to determine the main data block pattern.
         :param file_content: list of str
@@ -128,13 +121,8 @@ class DataPars:
             # initialization for self.parsed_content and self.lines_length_collection
             self.parsed_content = np.zeros(len(file_content), dtype=object)
             self.lines_length_collection = Counter()
-            # progress bar is created
-            progress = initialize_progress_dialog(self.parent_window, len(file_content), title='Parsing...', text='Parsing the file data')
             # parsing line by line
             for i, line in enumerate(file_content[self.file_start:], start=self.file_start):
-                # progress bar continues or is canceled
-                if not update_progress(self.parent_window, progress, i):
-                    break
                 # line is split according to self.separator_pattern using regular expression
                 split_result = re.split(self.separator_pattern, line.strip())
                 # now we try to create a np.array from the split_result
@@ -149,8 +137,6 @@ class DataPars:
                 except ValueError:
                     # if we cannot create a np.array from the split_result, we continue
                     continue
-            # progress bar finishes
-            finalize_progress(self.parent_window, progress, len(file_content))
         except Exception as e:
             raise Exception(f"Critical error in DataPars:parse_file_content: {str(e)}") from e
 
@@ -187,10 +173,7 @@ class DataPars:
         try:
             indexes_to_clean = []
             index_header_ends, index_data_starts = -1, -1
-            progress = initialize_progress_dialog(self.parent_window, len(self.parsed_content), title='Processing...', text='Cleaning the data...')
             for i, element in enumerate(self.parsed_content):
-                if not update_progress(self.parent_window, progress, i):
-                    break
                 if not isinstance(element, np.ndarray) or len(element) != max_length:
                     indexes_to_clean.append(i)
                 elif np.isnan(element).any():  # NaN action is possible here
@@ -202,7 +185,6 @@ class DataPars:
                         index_header_ends = i
                     if index_data_starts == -1:
                         index_data_starts = i
-            finalize_progress(self.parent_window, progress, len(self.parsed_content))
             return indexes_to_clean, index_header_ends, index_data_starts
         except Exception as e:
             raise Exception(f"Critical error in DataPars:indexes_to_clear_f: {str(e)}") from e
@@ -213,7 +195,6 @@ class DataPars:
 
             This function separates the header and garbage data from the file content using the provided indexes.
             It updates the `file_header` and `file_garbage` attributes accordingly.
-            If a parent window is provided, it will display a progress dialog during the processing.
 
         :param indexes_to_clean: list[int]
         	List of indexes to be processed.
@@ -226,10 +207,7 @@ class DataPars:
         """
         try:
             # header & garbage
-            progress = initialize_progress_dialog(self.parent_window, len(indexes_to_clean), title='Processing...', text='Set up the header and the garbage...')
             for index in indexes_to_clean:
-                if not update_progress(self.parent_window, progress, index):
-                    break
                 if index < index_header_ends:
                     self.file_header.append(file_content[index])
                 else:
@@ -237,7 +215,6 @@ class DataPars:
                         self.file_garbage.append((index, self.parsed_content[index]))
                     else:
                         self.file_garbage.append((index, file_content[index]))
-            finalize_progress(self.parent_window, progress, len(indexes_to_clean))
         except Exception as e:
             raise Exception(f"Critical error in DataPars:header_and_garbage_f: {str(e)}") from e
 
@@ -247,7 +224,6 @@ class DataPars:
 
             This function iterates over the parsed content starting at a specified index
             to determine the numerical accuracy and separator patterns used in the file content.
-            It also displays a progress dialog if a parent window is provided.
         :param index_data_starts: int
         	Index from which to start processing the data.
         :param file_content: list
@@ -257,11 +233,7 @@ class DataPars:
         """
         try:
             # accuracy & separator
-            progress = initialize_progress_dialog(self.parent_window, len(self.parsed_content), title='Processing...', text='Set up the accuracy and the separator...')
             for i in range(len(self.parsed_content)):
-                if self.parent_window:
-                    if not update_progress(self.parent_window, progress, i):
-                        break
                 if i >= index_data_starts and not np.isnan(self.parsed_content[i]).any():
                     for s in re.split(self.separator_pattern, file_content[i].strip()):
                         if "." in s:
@@ -275,7 +247,6 @@ class DataPars:
                     if match_separator:
                         self.file_separator = match_separator[0]
                     break
-            finalize_progress(self.parent_window, progress, len(self.parsed_content))
         except Exception as e:
             raise Exception(f"Critical error in DataPars:accuracy_and_separator_f: {str(e)}") from e
 

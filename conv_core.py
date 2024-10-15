@@ -22,7 +22,6 @@ from tools.data_length_adjust import spectrum_to_destination_cut, width_cut_off
 from tools.data_extraction import extract_one_column_from_data, extract_two_columns_from_data
 from tools.extrapolations import const_extrapolation, linear_extrapolation, y_extrapolation
 from tools.array_tools import is_array_empty
-from progress_dialog import initialize_progress_dialog, update_progress, finalize_progress
 
 # GLOBALS
 version = "2.0"
@@ -41,7 +40,6 @@ class ConvolutionCore:
         """
             Initializes the object and its state.
         """
-        self.parent_window = None
         self.tests_are_running = False
         self.init_spectrum()
         self.init_destination()
@@ -168,17 +166,6 @@ class ConvolutionCore:
         self.destination_brut_surface_area = 0
 
     # SETTERS
-    def parent_window_setter(self, parent_window):
-        """
-            Sets the parent window for the current object.
-
-        :param parent_window: object (QMainWindow or QDialog)
-            The window object to set as the parent.
-        :return: None
-            The function returns nothing, but it sets the parent window.
-        """
-        self.parent_window = parent_window
-
     def spectrum_setter_spectrum_from_file_and_its_width_from_file(self, spectrum_unit,
                                                                    spectrum_file_path, spectrum_wavelength_column, spectrum_intensity_column,
                                                                    spectrum_width_path, spectrum_width_column):
@@ -486,7 +473,7 @@ class ConvolutionCore:
         """
             Reads the spectrum data from a specified file and extracts the wavelength and intensity.
 
-            This function initializes a DataPars object with the provided file path and parent window,
+            This function initializes a DataPars object with the provided file path,
             calls the method to parse the file, and then extracts the spectral data into wavelength
             and intensity columns based on specified column indices.
         :return: None
@@ -494,7 +481,7 @@ class ConvolutionCore:
             spectrum_intensity attributes of the class.
         """
         try:
-            spectrum_reader = DataPars(self.spectrum_file_path, self.parent_window)
+            spectrum_reader = DataPars(self.spectrum_file_path)
             spectrum_reader.file_pars_f()
             if not is_array_empty(spectrum_reader.file_garbage):
                 self.spectrum_garbage = True
@@ -514,7 +501,7 @@ class ConvolutionCore:
             The function returns nothing, but it sets the spectrum_width_original class attribute.
         """
         try:
-            spectrum_data = DataPars(self.spectrum_width_path, self.parent_window)
+            spectrum_data = DataPars(self.spectrum_width_path)
             spectrum_data.file_pars_f()
             if not is_array_empty(spectrum_data.file_garbage):
                 self.spectrum_width_garbage = True
@@ -611,7 +598,7 @@ class ConvolutionCore:
         """
         try:
             self.destination_quantity = 0
-            destination_read = DataPars(self.destination_file_path, self.parent_window)
+            destination_read = DataPars(self.destination_file_path)
             destination_read.file_pars_f()
             if not is_array_empty(destination_read.file_garbage):
                 self.destination_garbage = True
@@ -697,7 +684,7 @@ class ConvolutionCore:
             and performs the final convolution setup.
         """
         try:
-            convolution_read = DataPars(self.convolution_file_path, self.parent_window)
+            convolution_read = DataPars(self.convolution_file_path)
             convolution_read.file_pars_f()
             if not is_array_empty(convolution_read.file_garbage):
                 self.convolution_width_garbage = True
@@ -1668,10 +1655,7 @@ class ConvolutionCore:
         """
         try:
             self.destination_intensity = np.zeros(len(self.destination_wavelength))
-            progress = initialize_progress_dialog(self.parent_window, len(self.destination_wavelength))
             for i in range(len(self.destination_wavelength)):
-                if not update_progress(self.parent_window, progress, i):
-                    break
                 # sigma_1 & 2
                 sigma_1, sigma_2 = self.get_sigmas(i)
                 # j_min & j_max in self.spectrum_wavelength
@@ -1684,7 +1668,6 @@ class ConvolutionCore:
                 # convolution
                 self.convolution_finalization(i, normalized_convolution_function, j_min, j_max)
             self.calculate_area_under_curve()  # test purposes only
-            finalize_progress(self.parent_window, progress, len(self.destination_wavelength))
         except Exception as e:
             raise Exception(f"Critical error in ConvolutionCore:convolution_calc: {str(e)}") from e
 

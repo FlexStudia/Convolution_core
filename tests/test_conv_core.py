@@ -175,7 +175,7 @@ def test_width_cut_off():
 def test_two_from_file_extractor_regular():
     # columns: 0 & 1
     file_path = "file_read/wlth_1_inty_2.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result1 = np.array([3500.273926, 3500.756104, 3501.238037, 3501.720947, 3502.202881, 3502.685059])
@@ -186,7 +186,7 @@ def test_two_from_file_extractor_regular():
     assert list_compare(result2, function_result2, 10 ** -6)
     # columns: 0 & 2
     file_path = "file_read/wlth_1_inty_3.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result1 = np.array([0, 0.482, 0.964, 1.446, 1.929, 2.411, 2.893, 3.375, 3.857])
@@ -197,7 +197,7 @@ def test_two_from_file_extractor_regular():
     assert list_compare(result2, function_result2, 10 ** 0)
     # columns: 1 & 2
     file_path = "file_read/wlth_1_inty_3.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result1 = np.array([1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23])
@@ -211,7 +211,7 @@ def test_two_from_file_extractor_regular():
 def test_one_from_file_extractor_regular():
     # columns: 0
     file_path = "file_read/wlth_1_inty_2.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result = np.array([3500.273926, 3500.756104, 3501.238037, 3501.720947, 3502.202881, 3502.685059])
@@ -219,7 +219,7 @@ def test_one_from_file_extractor_regular():
     assert list_compare(result, function_result, 10 ** -6)
     # columns: 1
     file_path = "file_read/wlth_1_inty_3.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result = np.array([1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23])
@@ -227,7 +227,7 @@ def test_one_from_file_extractor_regular():
     assert list_compare(result, function_result, 10 ** -2)
     # columns: 2
     file_path = "file_read/wlth_1_inty_3.txt"
-    data_read = data_pars.DataPars(file_path, None)
+    data_read = data_pars.DataPars(file_path)
     data_read.file_pars_f()
     my_data = data_read.file_body
     result = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -794,7 +794,7 @@ def test_convolution_calc_a_few_calcs():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_a_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -829,7 +829,7 @@ def test_convolution_calc_a_few_calcs():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_cm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -865,7 +865,7 @@ def test_convolution_calc_a_few_calcs():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/cm_a_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -902,7 +902,7 @@ def test_convolution_calc_a_few_calcs():
     convolution_width_2_start = 8.3746270
     convolution_width_2_stop = 16.970327
     result_path = "NH_case/constructors/File_linear_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -940,7 +940,7 @@ def test_convolution_calc_file_nh_a_a_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_a_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -979,7 +979,7 @@ def test_convolution_calc_file_nh_a_cm_gauss():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_cm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1019,7 +1019,7 @@ def test_convolution_calc_file_nh_a_cm_trap_ascending_ascending():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1065,7 +1065,7 @@ def test_convolution_calc_file_nh_a_cm_trap_descending_ascending():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1111,7 +1111,7 @@ def test_convolution_calc_file_nh_a_cm_trap_ascending_descending():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1157,7 +1157,7 @@ def test_convolution_calc_file_nh_a_cm_trap_descending_descending():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1202,7 +1202,7 @@ def test_convolution_calc_file_nh_a_cm_trig():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_cm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1241,7 +1241,7 @@ def test_convolution_calc_file_nh_a_mc_gauss():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_mc_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1281,7 +1281,7 @@ def test_convolution_calc_file_nh_a_mc_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_mc_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1320,7 +1320,7 @@ def test_convolution_calc_file_nh_a_mc_trig():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_mc_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1359,7 +1359,7 @@ def test_convolution_calc_file_nh_a_nm_gauss():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_nm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1399,7 +1399,7 @@ def test_convolution_calc_file_nh_a_nm_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/A_nm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1438,7 +1438,7 @@ def test_convolution_calc_file_nh_a_nm_trig():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/A_nm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1478,7 +1478,7 @@ def test_convolution_calc_file_nh_cm_a_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/cm_a_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1517,7 +1517,7 @@ def test_convolution_calc_file_nh_cm_cm_gauss():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_cm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1557,7 +1557,7 @@ def test_convolution_calc_file_nh_cm_cm_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/cm_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1596,7 +1596,7 @@ def test_convolution_calc_file_nh_cm_cm_trig():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_cm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1635,7 +1635,7 @@ def test_convolution_calc_file_nh_cm_mc_gauss():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_mc_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1675,7 +1675,7 @@ def test_convolution_calc_file_nh_cm_mc_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/cm_mc_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1714,7 +1714,7 @@ def test_convolution_calc_file_nh_cm_mc_trig():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_mc_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1753,7 +1753,7 @@ def test_convolution_calc_file_nh_cm_nm_gauss():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_nm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1793,7 +1793,7 @@ def test_convolution_calc_file_nh_cm_nm_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/cm_nm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1832,7 +1832,7 @@ def test_convolution_calc_file_nh_cm_nm_trig():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/cm_nm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1872,7 +1872,7 @@ def test_convolution_calc_file_nh_mc_a_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/mc_a_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1911,7 +1911,7 @@ def test_convolution_calc_file_nh_nm_cm_gauss():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_cm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1951,7 +1951,7 @@ def test_convolution_calc_file_nh_nm_cm_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/nm_cm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -1990,7 +1990,7 @@ def test_convolution_calc_file_nh_nm_cm_trig():
     convolution_file_path = "NH_case/ref_cm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_cm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2029,7 +2029,7 @@ def test_convolution_calc_file_nh_nm_mc_gauss():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_mc_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2069,7 +2069,7 @@ def test_convolution_calc_file_nh_nm_mc_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/nm_mc_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2108,7 +2108,7 @@ def test_convolution_calc_file_nh_nm_mc_trig():
     convolution_file_path = "NH_case/ref_micron.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_mc_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2147,7 +2147,7 @@ def test_convolution_calc_file_nh_nm_nm_gauss():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_nm_gauss.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2187,7 +2187,7 @@ def test_convolution_calc_file_nh_nm_nm_trap():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/results/nm_nm_trap.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2226,7 +2226,7 @@ def test_convolution_calc_file_nh_nm_nm_trig():
     convolution_file_path = "NH_case/ref_nm.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/results/nm_nm_trig.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2298,7 +2298,7 @@ def test_convolution_calc_file_linear_non_t():
     convolution_width_1_start = 16.749254
     convolution_width_1_stop = 33.940654
     result_path = "NH_case/constructors/File_linear_NonT.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2339,7 +2339,7 @@ def test_convolution_calc_file_linear_t_A_cm():
     convolution_width_2_start = 8.3746270
     convolution_width_2_stop = 16.970327
     result_path = "NH_case/constructors/File_linear_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2377,7 +2377,7 @@ def test_convolution_calc_file_const_non_t():
     convolution_truncation = 10
     convolution_width_1_const = 0.007
     result_path = "NH_case/constructors/File_Const_NonT.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2416,7 +2416,7 @@ def test_convolution_calc_file_const_t():
     convolution_width_1_const = 75
     convolution_width_2_const = 37
     result_path = "NH_case/constructors/File_Const_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2456,7 +2456,7 @@ def test_convolution_calc_linear_file_non_t():
     convolution_file_path = "NH_case/ref_A.txt"
     convolution_width_1_column = 1
     result_path = "NH_case/constructors/linear_file_NonT.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2497,7 +2497,7 @@ def test_convolution_calc_linear_file_t():
     convolution_width_1_column = 1
     convolution_width_2_column = 2
     result_path = "NH_case/constructors/linear_file_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2538,7 +2538,7 @@ def test_convolution_calc_file_linear_t_mc_nm_ascending_ascending():
     convolution_width_2_start = 2.557569
     convolution_width_2_stop = 5.18267
     result_path = "NH_case/results/mc_nm_trap_file_linear.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2579,7 +2579,7 @@ def test_convolution_calc_file_linear_t_mc_nm_descending_ascending():
     convolution_width_2_start = 2.557569
     convolution_width_2_stop = 5.18267
     result_path = "NH_case/results/mc_nm_trap_file_linear.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2620,7 +2620,7 @@ def test_convolution_calc_file_linear_t_mc_nm_ascending_descending():
     convolution_width_2_start = 5.18267
     convolution_width_2_stop = 2.557569
     result_path = "NH_case/results/mc_nm_trap_file_linear.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2661,7 +2661,7 @@ def test_convolution_calc_file_linear_t_mc_nm_descending_descending():
     convolution_width_2_start = 5.18267
     convolution_width_2_stop = 2.557569
     result_path = "NH_case/results/mc_nm_trap_file_linear.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2701,7 +2701,7 @@ def test_convolution_calc_linear_linear_non_t():
     convolution_width_1_start = 51.15138
     convolution_width_1_stop = 103.65304
     result_path = "NH_case/constructors/linear_linear_NonT.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2744,7 +2744,7 @@ def test_convolution_calc_linear_linear_t():
     convolution_width_2_start = 25.57569
     convolution_width_2_stop = 51.82652
     result_path = "NH_case/constructors/linear_linear_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
@@ -2784,7 +2784,7 @@ def test_convolution_calc_linear_const_t():
     convolution_width_1_const = 77
     convolution_width_2_const = 38.5
     result_path = "NH_case/constructors/linear_Const_T.txt"
-    result_read = data_pars.DataPars(result_path, None)
+    result_read = data_pars.DataPars(result_path)
     result_read.file_pars_f()
     result_data = result_read.file_body
     result = np.zeros(len(result_data))
