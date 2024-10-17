@@ -1949,14 +1949,61 @@ class ConvolutionCore:
             raise Exception(f"Critical error in ConvolutionCore:export_result_in_a_file: {str(e)}") from e
 
 
-def demo_f():
-    """
-        This is an examples how to use this class to calculate the convolution.
+# EXAMPLES
+"""
+    These are examples how to use this class to calculate the convolution.
 
-        This function reads spectrum data from a file, sets up destination parameters
-        and convolution parameters, performs convolution, and then prints and optionally
-        exports the results.
+    This functions reads spectrum data from a file, sets up destination parameters
+    and convolution parameters, performs convolution, and then prints and optionally
+    exports the results.
+"""
+def demo_f_linear_destination_and_width_from_file():
+    # INPUT
+    ## spectrum: A
+    spectrum_file_path = "tests/NH_case/spectrum_A.txt"
+    spectrum_unit = "A"
+    spectrum_wavelength_column = 0
+    spectrum_intensity_column = 1
+    ## destination: from file, cm
+    destination_file_path = "tests/NH_case/ref_cm.txt"
+    destination_unit = "cm-1"
+    destination_wavelength_column = 0
+    ## convolution: triangle function, width from file
+    convolution_extrapolation_type = 0  # "zeros"
+    convolution_type = 1  # "triangle"
+    convolution_gauss_ratio = 0
+    convolution_truncation = 3
+    convolution_file_path = "tests/NH_case/ref_cm.txt"
+    convolution_width_1_column = 1
+    # CLASS instance evocation
     """
+            Note: the order of the setters is crucial. Ideally, the spectrum setter should be 
+            called first, followed by the destination setter, and finally, the convolution 
+            setter. The destination setter can be called before the spectrum setter. 
+            However, the convolution setter should never be called before the destination setter.
+    """
+    my_conv = ConvolutionCore()
+    my_conv.spectrum_setter_spectrum_from_file_and_its_width_from_file(spectrum_unit, spectrum_file_path, spectrum_wavelength_column, spectrum_intensity_column, spectrum_file_path, np.NAN)
+    my_conv.destination_setter_from_file(destination_unit, destination_file_path, destination_wavelength_column)
+    my_conv.convolution_setter_width_from_file(convolution_type, convolution_gauss_ratio, convolution_truncation, convolution_extrapolation_type, convolution_file_path, convolution_width_1_column, np.NAN)
+    # CALC
+    my_conv.tests_are_running = False  # flag for tests; can be used to prevent the interface from "asking questions" if True.
+    my_conv.convolution_stack()
+    # OUTPUT
+    ## convoluted spectrum
+    if my_conv.convolution_is_calculated:  # if the calculation process has been completed without errors (or was not canceled)
+        print("\n\nConvoluted intensity:")
+        print(my_conv.destination_intensity_getter())
+        ## export (optional); The values are separated by the separator found in the spectrum file and the file is stored in the same directory as the spectrum file.
+        # my_conv.result_export_in_a_file()  # saves the destination wavelength and the convolved intensity into a file
+        ## truncated convolution function is normalized (optional)
+        print(f"\nTruncated convolution function is normalized as this value is (technically) equal to 1: {my_conv.mean_truncated_convolution_function_area:.6f}")
+        ## energy conservation (optional)
+        print("\nEnergy conservation")
+        print(my_conv.energy_gain_loss())
+
+
+def demo_f_destination_and_width_from_file():
     # INPUT
     ## spectrum: micron
     spectrum_file_path = "tests/NH_case/spectrum_micron.txt"
@@ -2003,4 +2050,52 @@ def demo_f():
         print(my_conv.energy_gain_loss())
 
 
-# demo_f()  # uncomment to run demo_f()
+def demo_f_preset_like_examples():
+    # INPUT
+    ## spectrum: A
+    spectrum_file_path = "tests/NH_case/spectrum_A.txt"
+    spectrum_unit = "A"
+    spectrum_wavelength_column = 0
+    spectrum_intensity_column = 1
+    ## destination: for LEISA New Horizons
+    destination_file_path = "presets/LEISA New Horizons.txt"
+    destination_unit = "nm"
+    destination_wavelength_column = 0
+    ## convolution: LEISA convolution is Gauss, width from file
+    convolution_extrapolation_type = 0  # "zeros"
+    convolution_type = 0  # "Gauss"
+    convolution_gauss_ratio = 0
+    convolution_truncation = 10  # default truncation for the Gauss function
+    convolution_file_path = "presets/LEISA New Horizons.txt"
+    convolution_width_1_column = 1
+    # CLASS instance evocation
+    """
+            Note: the order of the setters is crucial. Ideally, the spectrum setter should be 
+            called first, followed by the destination setter, and finally, the convolution 
+            setter. The destination setter can be called before the spectrum setter. 
+            However, the convolution setter should never be called before the destination setter.
+    """
+    my_conv = ConvolutionCore()
+    my_conv.spectrum_setter_spectrum_from_file_and_its_width_from_file(spectrum_unit, spectrum_file_path, spectrum_wavelength_column, spectrum_intensity_column, spectrum_file_path, np.NAN)
+    my_conv.destination_setter_from_file(destination_unit, destination_file_path, destination_wavelength_column)
+    my_conv.convolution_setter_width_from_file(convolution_type, convolution_gauss_ratio, convolution_truncation, convolution_extrapolation_type, convolution_file_path, convolution_width_1_column, np.NAN)
+    # CALC
+    my_conv.tests_are_running = False  # flag for tests; can be used to prevent the interface from "asking questions" if True.
+    my_conv.convolution_stack()
+    # OUTPUT
+    ## convoluted spectrum
+    if my_conv.convolution_is_calculated:  # if the calculation process has been completed without errors (or was not canceled)
+        print("\n\nConvoluted intensity:")
+        print(my_conv.destination_intensity_getter())
+        ## export (optional); The values are separated by the separator found in the spectrum file and the file is stored in the same directory as the spectrum file.
+        # my_conv.result_export_in_a_file()  # saves the destination wavelength and the convolved intensity into a file
+        ## truncated convolution function is normalized (optional)
+        print(f"\nTruncated convolution function is normalized as this value is (technically) equal to 1: {my_conv.mean_truncated_convolution_function_area:.6f}")
+        ## energy conservation (optional)
+        print("\nEnergy conservation")
+        print(my_conv.energy_gain_loss())
+
+# uncomment to run examples
+# demo_f_linear_destination_and_width_from_file()
+# demo_f_linear_destination_constant_width()
+# demo_f_preset_like_examples()
