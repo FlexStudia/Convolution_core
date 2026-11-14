@@ -1,23 +1,41 @@
 # About
 
-This is the core code for calculating **convolution of a spectrum**.
+This is the core code for calculating **the convolution of a spectrum**.
 
-The process of convolution consistes in reducing the resolution of the original high-resolution spectrum so that it corresponds to an instrument with lower resolution, while preserving the energy as much as possible. 
+Convolution is a standard method used to reduce the resolution of high-resolution data. 
 
-# How it works
+In planetary science spectroscopy, it is used to compare high-resolution laboratory data 
+with lower-resolution data obtained by space-based instruments.
 
-The programme is written in **Python**. 
+# What is this code?
 
-There is a version with an interface in PyQt framework. You can find it in [the corresponding repository](https://github.com/FlexStudia/Convolution).
+This code is written in **Python**. It works as a module.
 
-There are several possibilities for working with this code:
+It performs convolution directly and is independent of any graphical user interface.
 
-- use this code to convolve the spectra (to do this you need to install Python, install a virtual environment, install the packages from requirements.txt and then work with the code).
-- use this code as a module in your project
+We have developed a Windows executable based on the PyQt framework and this code, 
+which can be found in [the corresponding repository](https://github.com/FlexStudia/Convolution).
+
+# How to use this code
+
+This code can be used on **its own to directly calculate the convolution** for your data 
+or as **a module** in your project.
+
+Instructions for using the module and an example of its use are included in the conv_core.py file.
 
 # License
 
-We distribute this code under the MIT licence. This licence imposes two obligations. The first one is to cite the author (**2024 Maria Gorbacheva (Flex Studia, [flex.studia.dev@gmail.com](mailto:flex.studia.dev@gmail.com))**) and the second one is to cite the MIT licence (as MIT License). After it you can use this code as you please.
+We distribute this code under the MIT license. 
+This license imposes two obligations:
+1. To cite the authors.
+2. To cite the MIT license.
+
+For example:
+
+**The code of the conv_core module was created by Gorbacheva Maria, Flex Studia (flex.studia.dev@gmail.com) in 2024.
+The scientific base is by Bernard Schmitt, IPAG (bernard.schmitt@univ-grenoble-alpes.fr).
+This module is distributed under [the MIT license](https://opensource.org/license/mit).**
+
 
 # Questions
 
